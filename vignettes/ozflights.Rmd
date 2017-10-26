@@ -1,6 +1,6 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "Ozflights - get the Australian flights data from 1985-2016"
+author: "Maddie Davey, Steph de Silva, Mathew Ling, Nicholas Teirney, Adam Gruen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -9,17 +9,80 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+Welcome to Ozflights! Get the data for passenger, aircraft and international freight movements for both metropolitan and regional airports in Australia. The dataset covers 1985-2016. Uses the annual airport traffic data from the Australian Government Department of Infrastructure and Regional Development located at: https://bitre.gov.au/publications/ongoing/airport_traffic_data.aspx
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+## Package Author's Notes
 
-## Vignette Info
+Data was available at URL as at 17/10/26. Data is imported into R and cleaned by removing redundant headers and transforming into a tidy format.
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+Airport ranking variable was removed: the interested party can recalculate.
 
-## Styles
+Contact details for the data itself can be found in the original spreadsheet, but please don’t contact the aviation stats team for problems with the package!
+
+Beware: there are both Australian totals and individual airport figures in the tables- you may wish to filter either out.
+
+## Publication Notes:
+
+This publication presents time series data on scheduled Regular Public Transport (RPT) services at selected Australian airports by calendar year over the period 1986 to 2016.
+
+###Coverage: 
+
+Data is derived from International and Domestic (including Regional) RPT services, and does not include charter or other non-scheduled activity. Data is presented on all Australian airports with more than 7,000 revenue passenger movements during 2016, except for Avalon Airport which is excluded for commercial-in-confidence reasons.
+
+Information on revenue passengers and aircraft movements is provided for all airports that meet the criteria above. Freight and mail data is also provided for those airports receiving international services. Domestic mail and freight data has been excluded as the dataset is incomplete.
+
+### Basis for collection:
+
+The data in this report is presented separately for International and Domestic (including Regional) airline sectors. International airlines are those airlines operating RPT services into or out of Australia. Domestic airlines are those operating RPT services between two Australian airports. From August 2013, statistics on Regional airlines can no longer be separately identified. Calendar year data including Regional airline data separately identified can be found in the file "Airport Traffic Data 1985 to 2012".
+
+International airline statistics are based on Uplift/Discharge. Uplift/Discharge (UD) data shows, by direction, the revenue traffic between the actual points of uplift and discharge within the same flight number, aggregated for all flights within the period.
+
+Domestic (including Regional) airline data have been compiled using a combination of Uplift/Discharge and Traffic On Board (TOB) data. Traffic On Board: One flight stage refers to one take-off and landing. If a passenger's journey involves more than one take-off and landing, then that passenger will be counted for each stage travelled. Traffic On Board statistics, therefore, reflect the number of revenue passengers to/from or via the particular airport.
+
+Domestic passengers carried on domestic legs of international flights are not included in these statistics. However, for July 2011 and onwards domestic passengers carried on international flight numbers that operate only between domestic ports have been included. This change in reporting provides more accurate passenger traffic figures.
+
+### Revenue Passenger Definition:
+
+Up to December 1999, international revenue passengers represented the aggregate of all passengers paying 25 per cent or more of the standard airfare (the ICAO definition of revenue passenger at that time). From January to July 2000, a broader definition of revenue passenger was introduced. Revenue passengers for international services now include all passengers excluding 'free of charge' passengers and positioning crew.
+
+Revenue passengers for domestic and regional airline services are regarded as those paying any fare. Airlines also include passengers travelling on tickets acquired under the terms of frequent flyer schemes.
+
+In this report, airport passenger movement numbers are the sum of passenger arrivals and departures at each airport for Regular Public Transport operations only. Each domestic passenger generates two passenger movements (a departure and an arrival). For example, a passenger flying from Melbourne to Sydney will be counted twice, as a passenger departure at Melbourne and a passenger arrival at Sydney. Each international passenger, however, generates only one passenger movement (either an arrival or a departure).
+
+### Other Points:
+
+Rank for passenger movements is only shown for airports with 50,000 or more passenger movements a year.
+
+Rank for aircraft movements is only shown for airports with 5,000 or more aircraft movements a year.
+
+Rankings for airports that no longer meet the reporting criteria will not be included for prior years.
+
+Domestic airline services were severely affected by the pilots' dispute in 1989-90.
+
+Domestic and Regional services for 2001 and 2002 were affected by the collapse of Ansett in September 2001.
+
+Domestic freighter movements are partial from early 1990s to mid 2000s.
+
+Virgin Australia entered the domestic market in 2000.
+
+Jetstar entered the domestic market in 2004.
+
+Tigerair Australia entered the domestic market in November 2007.
+
+Figures may include estimates and figures for some airports for some years may not be complete.
+
+### Indemnity Statement:
+
+The Bureau of Infrastructure, Transport and Regional Economics has taken due care in preparing this information. However, noting that data have been provided by third parties, the Commonwealth gives no warranty as to the accuracy, reliability, fitness for purpose, or otherwise of the information.
+
+
+Copyright
+
+© Commonwealth of Australia, 2017
+
+This work is copyright and the data contained in this publication should not be reproduced or used in any form without acknowledgement.
+
+## Usage
 
 The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
 
