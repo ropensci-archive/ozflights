@@ -3,7 +3,9 @@ Title: Get Australian Flight Data, 1985-2016
 Version: 0.0.0.9000
 Authors@R: c(
     person("Mathew", "Ling", , email = "m.ling@deakin.edu.au", role = c("aut", "cre")),
-    person("Steph", "de Silva", , email = "steph@rex-analytics.com", role = c("aut"))
+    person("Steph", "de Silva", , email = "steph@rex-analytics.com", role = c("aut")),
+    person("Nicholas", "Tierney", , email = "nicholas.tierney@gmail.com", role = c("ctb")),
+    person("Michael", "Sumner", , email = "mdsumner@gmail.com", role = c("aut"))
     )
 Description: Get Australian flight data between 1985-2016. Contains 
     both international and domestic data on number of passengers, 
@@ -19,3 +21,6 @@ Imports: dplyr,
     readxl,
     magrittr,
     utils
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
