@@ -38,7 +38,8 @@ international_freight <-  function(){
                                        "int_freight_inbound", "int_freight_outbound",
                                        "int_freight_total",
                                        "int_mail_inbound", "int_mail_outbound",
-                                       "int_mail_total")  
+                                       "int_mail_total")
+  international_freight
   
 }
 
@@ -77,8 +78,3 @@ aircraft_movements <-  function() {
   aircraft_movements_raw %>% cleaner()
 
 }
-
-
-# Rename columns
-
-# TODO: tidy
