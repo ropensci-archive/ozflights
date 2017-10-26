@@ -1,9 +1,11 @@
 library(tidyverse)
 library(readxl)
 
-cleaner <- function(x){ 
-  #not functional
-  rename( 
+# define helper
+cleaner <- function(x){
+  select(x, 1:13) %>% 
+    filter(!is.na(AIRPORT)) %>%
+    rename( 
     airportyear = X__1,
     airport = AIRPORT,
     year = Year,
@@ -18,10 +20,10 @@ cleaner <- function(x){
     total__outbound = OUTBOUND__2,
     total__total    = TOTAL__2
   ) %>% 
-    gather(airportyear, -c(airport, year, rank)) %>% 
     select(-c(airportyear, rank)) 
 }
 
+# Access the data
 download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2016.xls",
               mode = "wb",
               destfile = "temp.xls")
@@ -41,13 +43,6 @@ international_freight_raw <- readxl::read_xls("temp.xls",
                                            skip = 6
 )
 
-
-
-aircraft_movements <-  aircraft_movements_raw %>% cleaner()
-
+# parse data
 airport_passengers <- airport_passengers_raw %>% cleaner()
- 
-  
-# Rename columns 
-
-# TODO: tidy 
+aircraft_movements <-  aircraft_movements_raw %>% cleaner()
