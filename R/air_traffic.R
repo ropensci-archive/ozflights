@@ -9,12 +9,12 @@
 #' @export
 #'
 #' @examples
-#' /dontrun{
+#' \dontrun{
 #' international_freight()
 #' }
 international_freight <-  function(){
 
-  download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2016.xls",
+  utils::download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2016.xls",
                 mode = "wb",
                 destfile = "temp.xls")
 
@@ -44,12 +44,12 @@ international_freight <-  function(){
 #' @export
 #'
 #' @examples
-#' /dontrun{
+#' \dontrun{
 #' airport_passengers()
 #' }
 airport_passengers <- function() {
 
-  download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2016.xls",
+  utils::download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2016.xls",
               mode = "wb",
               destfile = "temp.xls")
 
@@ -73,12 +73,12 @@ airport_passengers <- function() {
 #' @export
 #'
 #' @examples
-#' /dontrun{
+#' \dontrun{
 #' aircraft_movements()
 #' }
 aircraft_movements <-  function() {
 
-  download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2016.xls",
+  utils::download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2016.xls",
               mode = "wb",
               destfile = "temp.xls")
 

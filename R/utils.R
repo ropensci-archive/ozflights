@@ -1,6 +1,21 @@
 #' @importFrom magrittr %>%
 NULL
 
+globalVariables(
+  c(
+    "AIRPORT",
+    "Year",
+    "INBOUND",
+    "OUTBOUND",
+    "INBOUND__1",
+    "OUTBOUND__1",
+    "type",
+    "count",
+    "airport",
+    "year"
+  )
+)
+
 cleaner <- function(x){
   dplyr::select(x, AIRPORT, Year, INBOUND, OUTBOUND, INBOUND__1, OUTBOUND__1) %>%
     dplyr::filter(!is.na(AIRPORT)) %>%

@@ -16,7 +16,7 @@ Accesses Australian aircraft traffic data from
     from Australian airports, indexed by year.
 }
 \examples{
-/dontrun{
+\dontrun{
 aircraft_movements()
 }
 }

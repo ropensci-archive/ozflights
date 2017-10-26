@@ -16,7 +16,7 @@ Accesses Australian airport passenger traffic data from
     passengers from Australian airports, indexed by year.
 }
 \examples{
-/dontrun{
+\dontrun{
 airport_passengers()
 }
 }

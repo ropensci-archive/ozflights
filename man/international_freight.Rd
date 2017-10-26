@@ -16,7 +16,7 @@ Accesses Australian international freight data from
     airports, indexed by year.
 }
 \examples{
-/dontrun{
+\dontrun{
 international_freight()
 }
 }
