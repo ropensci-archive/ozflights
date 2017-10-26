@@ -1,4 +1,5 @@
 #' @importFrom magrittr %>%
+NULL
 
 cleaner <- function(x){
   dplyr::select(x, AIRPORT, Year, INBOUND, OUTBOUND, INBOUND__1, OUTBOUND__1) %>%
