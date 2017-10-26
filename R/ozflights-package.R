@@ -8,10 +8,5 @@
 #'
 #' @name ozflights
 #' @docType package
-#' @import dplyr
-#' @import tidyr
-#' @import readxl
-#' @import magrittr
-#' @import utils
 #'
 NULL
