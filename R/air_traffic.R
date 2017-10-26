@@ -1,29 +1,19 @@
-library(tidyverse)
-library(readxl)
-library(tidyselect)
-
-# define helper
-cleaner <- function(x){
-  select(x, AIRPORT, Year, INBOUND, OUTBOUND, INBOUND__1, OUTBOUND__1) %>% 
-    filter(!is.na(AIRPORT)) %>%
-    rename( 
-    airport = AIRPORT,
-    year = Year,
-    dom_inbound     = INBOUND,
-    dom_outbound    = OUTBOUND,
-    int_inbound     = INBOUND__1,
-    int_outbound    = OUTBOUND__1
-    ) %>% 
-    gather(type, count, -airport, -year) %>% 
-    mutate(
-      domest = grepl("dom_", type),
-      type = gsub("dom_", "", type),
-      type = gsub("int_", "", type)
-    ) 
-}
-
+#' Australian international freight data
+#'
+#' Accesses Australian international freight data from
+#'     (\url{https://bitre.gov.au/publications/ongoing/airport_traffic_data.aspx}).
+#'     Contains inbound and outbound freight and mail in tonnes from Australian
+#'     airports, indexed by year.
+#'
+#' @return A dataframe of international freight data through Australian airports
+#' @export
+#'
+#' @examples
+#' /dontrun{
+#' international_freight()
+#' }
 international_freight <-  function(){
-  
+
   download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2016.xls",
                 mode = "wb",
                 destfile = "temp.xls")
@@ -32,7 +22,7 @@ international_freight <-  function(){
                                                 sheet = 5,
                                                 skip = 6
   )
-  
+
   international_freight <- international_freight_raw
   colnames(international_freight) <- c("airport", "year",
                                        "int_freight_inbound", "int_freight_outbound",
@@ -40,9 +30,23 @@ international_freight <-  function(){
                                        "int_mail_inbound", "int_mail_outbound",
                                        "int_mail_total")
   international_freight
-  
+
 }
 
+#' Australian airport passenger traffic
+#'
+#' Accesses Australian airport passenger traffic data from
+#'     (\url{https://bitre.gov.au/publications/ongoing/airport_traffic_data.aspx}).
+#'     Contains the counts of inbound and outbound, domestic and international revenue
+#'     passengers from Australian airports, indexed by year.
+#'
+#' @return A tidy data frame of passengers passing through Australian airports
+#' @export
+#'
+#' @examples
+#' /dontrun{
+#' airport_passengers()
+#' }
 airport_passengers <- function() {
 
   download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2016.xls",
@@ -58,6 +62,20 @@ airport_passengers <- function() {
   airport_passengers <- airport_passengers_raw %>% cleaner()
 }
 
+#' Australian aircraft movements
+#'
+#' Accesses Australian aircraft traffic data from
+#'     (\url{https://bitre.gov.au/publications/ongoing/airport_traffic_data.aspx}).
+#'     Contains the counts of inbound and outbound, domestic and international flights
+#'     from Australian airports, indexed by year.
+#'
+#' @return A tidy data frame of flights passing through Australian airports
+#' @export
+#'
+#' @examples
+#' /dontrun{
+#' aircraft_movements()
+#' }
 aircraft_movements <-  function() {
 
   download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2016.xls",
