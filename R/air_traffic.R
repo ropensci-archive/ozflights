@@ -42,7 +42,19 @@ international_freight_raw <- readxl::read_xls("temp.xls",
                                            sheet = 5,
                                            skip = 6
 )
-
 # parse data
-airport_passengers <- airport_passengers_raw %>% cleaner()
+international_freight <- international_freight_raw
+colnames(international_freight) <- c("airport", "year",
+                                     "int_freight_inbound", "int_freight_outbound",
+                                     "int_freight_total",
+                                     "int_mail_inbound", "int_mail_outbound",
+                                     "int_mail_total")
+
 aircraft_movements <-  aircraft_movements_raw %>% cleaner()
+
+airport_passengers <- airport_passengers_raw %>% cleaner()
+
+
+# Rename columns
+
+# TODO: tidy
