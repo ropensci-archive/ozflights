@@ -27,10 +27,25 @@ international_freight <-  function(){
 
   international_freight <- international_freight_raw
   colnames(international_freight) <- c("airport", "year",
-                                       "int_freight_inbound", "int_freight_outbound",
+                                       "freight_inbound", "freight_outbound",
                                        "int_freight_total",
-                                       "int_mail_inbound", "int_mail_outbound",
+                                       "mail_inbound", "mail_outbound",
                                        "int_mail_total")
+
+  international_freight <- international_freight %>%
+    dplyr::select(airport,
+                  year,
+                  freight_inbound,
+                  freight_outbound,
+                  mail_inbound,
+                  mail_outbound) %>%
+    tidyr::gather(key = direction, value= tonnage, -airport, -year) %>%
+    dplyr::mutate(
+      type = ifelse(grepl("freight_", direction), "Freight", "Mail"),
+      direction = gsub("freight_", "", direction),
+      direction = gsub("mail_", "", direction)
+      )
+
   international_freight
 
 }
