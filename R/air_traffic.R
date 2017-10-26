@@ -1,26 +1,25 @@
 library(tidyverse)
 library(readxl)
+library(tidyselect)
 
 # define helper
 cleaner <- function(x){
-  select(x, 1:13) %>% 
+  select(x, AIRPORT, Year, INBOUND, OUTBOUND, INBOUND__1, OUTBOUND__1) %>% 
     filter(!is.na(AIRPORT)) %>%
     rename( 
-    airportyear = X__1,
     airport = AIRPORT,
     year = Year,
-    rank = Rank,
     dom_inbound     = INBOUND,
     dom_outbound    = OUTBOUND,
-    dom_total       = TOTAL,
     int_inbound     = INBOUND__1,
-    int_outbound    = OUTBOUND__1,
-    int_total       = TOTAL__1,
-    total__inbound  = INBOUND__2,
-    total__outbound = OUTBOUND__2,
-    total__total    = TOTAL__2
-  ) %>% 
-    select(-c(airportyear, rank)) 
+    int_outbound    = OUTBOUND__1
+    ) %>% 
+    gather(type, count, -airport, -year) %>% 
+    mutate(
+      domest = grepl("dom_", type),
+      type = gsub("dom_", "", type),
+      type = gsub("int_", "", type)
+    ) 
 }
 
 # Access the data
