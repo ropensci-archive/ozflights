@@ -16,12 +16,14 @@ international_freight <-  function(){
 
   utils::download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2016.xls",
                 mode = "wb",
-                destfile = "temp.xls")
+                destfile = "temp-flights.xls")
 
-  international_freight_raw <- readxl::read_xls("temp.xls",
+  international_freight_raw <- readxl::read_xls("temp-flights.xls",
                                                 sheet = 5,
                                                 skip = 6
   )
+
+  file.remove("temp-flights.xls")
 
   international_freight <- international_freight_raw
   colnames(international_freight) <- c("airport", "year",
@@ -51,13 +53,14 @@ airport_passengers <- function() {
 
   utils::download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2016.xls",
               mode = "wb",
-              destfile = "temp.xls")
+              destfile = "temp-flights.xls")
 
 
-  airport_passengers_raw <- readxl::read_xls("temp.xls",
+  airport_passengers_raw <- readxl::read_xls("temp-flights.xls",
                                            sheet = 3,
                                            skip = 6
                                            )
+  file.remove("temp-flights.xls")
 
   airport_passengers <- airport_passengers_raw %>% cleaner()
 }
@@ -80,18 +83,14 @@ aircraft_movements <-  function() {
 
   utils::download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2016.xls",
               mode = "wb",
-              destfile = "temp.xls")
+              destfile = "temp-flights.xls")
 
-
-  airport_passengers_raw <- readxl::read_xls("temp.xls",
-                                           sheet = 3,
-                                           skip = 6
-                                           )
-
-  aircraft_movements_raw <- readxl::read_xls("temp.xls",
+  aircraft_movements_raw <- readxl::read_xls("temp-flights.xls",
                                            sheet = 4,
                                            skip = 6
                                            )
+
+  file.remove("temp-flights.xls")
 
   aircraft_movements_raw %>% cleaner()
 
