@@ -9,6 +9,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, fig.show = 'hide'}
+knitr::opts_chunk$set(fig.width=8, fig.height=5) 
+```
+
 Welcome to Ozflights! Get the data for passenger, aircraft and international freight movements for both metropolitan and regional airports in Australia. The dataset covers 1985-2016. 
 
 ## Package Author's Notes
@@ -273,7 +277,7 @@ ggplot(passengers_aus_in)+
   facet_grid(domest~., scale="free")+
   geom_line(aes(year, count, colour = type))+
   theme_light()+
-  ggtitle("Passengers, inbound and outbound 1985-2016")
+  ggtitle("Inbound Passengers")
 ```
 
 A much clearer graph! If you want to go pro: can we change the axist labels?
