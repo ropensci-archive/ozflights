@@ -6,7 +6,8 @@ Authors@R: c(
     person("Steph", "de Silva", , email = "steph@rex-analytics.com", role = c("aut")),
     person("Nicholas", "Tierney", , email = "nicholas.tierney@gmail.com", role = c("aut")),
     person("Michael", "Sumner", , email = "mdsumner@gmail.com", role = c("aut")),
-    person("Madeline", "Davey", , email = "madeline.davey@uq.edu.au", role = c("aut"))
+    person("Madeline", "Davey", , email = "madeline.davey@uq.edu.au", role = c("aut")),
+    person("Adam", "Gruer", , email = "adamgruer@icloud.com", role = c("aut"))
     )
 Description: A package to obtain Australian aviation data from BITRE.
     This incudes airport traffic data between 1985-2016 covering international freight data, 
