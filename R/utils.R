@@ -12,7 +12,17 @@ globalVariables(
     "type",
     "count",
     "airport",
-    "year"
+    "year",
+    "AIRPORT NAME",
+    "AIRPORT NAME_1",
+    "CODE",
+    "CODE_1",
+    "DEG",
+    "DEG_1",
+    "DIR", "DIR_1", "KM", "MIN",
+    "MIN_1", "NM", "SEC", "SEC_1", "SM", "airport_code", "direction", "freight_inbound",
+    "freight_outbound", "lat_deg", "lat_dir", "lat_min", "lat_sec", "long_deg", "long_dir",
+    "long_min", "long_sec", "mail_inbound", "mail_outbound", "tonnage"
   )
 )
 

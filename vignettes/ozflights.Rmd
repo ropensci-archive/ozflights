@@ -162,9 +162,9 @@ Pro tip! Do you have any missing variables? If you're lucky, these are coded as 
 From the inside out:
 - We are looking at the count variable in the movements_aus tibble.
 - we are checking which ones are `NA`
-- we are counting them using `count()` from `plyr`
+- we are counting them using `sum()`.
 ```{r, fig.show = 'hold'}
-plyr::count(is.na(movements_aus$count))
+sum(is.na(movements_aus$count))
 ```
 This matches our number of observations. Now missing. Yeah!
 
