@@ -1,0 +1,37 @@
+---
+title: "README"
+author: "Mathew Ling, Steph de Silva, Maddie Davey, Nicholas Tierney, Adam Gruen"
+date: "27/10/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Ozflights
+
+Welcome to Ozflights! Get the data for passenger, aircraft and international freight movements for both metropolitan and regional airports in Australia. The dataset covers 1985-2016. 
+
+## Installation
+
+You can install `ozflights` from github:
+
+```
+#install.packages("devtools")
+devtools:install_github(ropensci/ozflights)
+```
+
+## Package Author's Notes
+
+Data was available at URL as at 17/10/26. Data is imported into R and cleaned by removing redundant headers and transforming into a tidy format.
+
+Airport ranking variable was removed: the interested party can recalculate.
+
+Uses the annual airport traffic data from the Australian Government Department of Infrastructure and Regional Development located at: https://bitre.gov.au/publications/ongoing/airport_traffic_data.aspx
+
+Contact details for the data itself can be found in the original spreadsheet, but please don’t contact the aviation stats team for problems with the package!
+
+
+
+
