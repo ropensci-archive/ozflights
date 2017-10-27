@@ -166,6 +166,13 @@ plyr::count(is.na(movements_aus$count))
 ```
 This matches our number of observations. Now missing. Yeah!
 
+We have both inbound and outbound flights. But we don't want to try and analyse those together- it wouldn't make sense. Let's create two new dataframes: `movements_aus_in` and `movements_aus_out` using `dplyr::filter()` again:
+
+```{r, fig.show = 'hold'}
+movements_aus_in <- dplyr::filter(movements_aus, type == "inbound")
+movements_aus_out <- dplyr::filter(movements_aus, type == "outbound")
+```
+Pro tip: note how we're using `==` in the filter function. This is how we match things in R when making comparisons. (OK, there's more to it than that, but you get the picture here.)
 
 
 ```
