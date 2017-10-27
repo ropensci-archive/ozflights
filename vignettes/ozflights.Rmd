@@ -9,13 +9,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Welcome to Ozflights! Get the data for passenger, aircraft and international freight movements for both metropolitan and regional airports in Australia. The dataset covers 1985-2016. Uses the annual airport traffic data from the Australian Government Department of Infrastructure and Regional Development located at: https://bitre.gov.au/publications/ongoing/airport_traffic_data.aspx
+Welcome to Ozflights! Get the data for passenger, aircraft and international freight movements for both metropolitan and regional airports in Australia. The dataset covers 1985-2016. 
 
 ## Package Author's Notes
 
 Data was available at URL as at 17/10/26. Data is imported into R and cleaned by removing redundant headers and transforming into a tidy format.
 
 Airport ranking variable was removed: the interested party can recalculate.
+
+Uses the annual airport traffic data from the Australian Government Department of Infrastructure and Regional Development located at: https://bitre.gov.au/publications/ongoing/airport_traffic_data.aspx
 
 Contact details for the data itself can be found in the original spreadsheet, but please don’t contact the aviation stats team for problems with the package!
 
