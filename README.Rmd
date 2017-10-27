@@ -32,6 +32,26 @@ Uses the annual airport traffic data from the Australian Government Department o
 
 Contact details for the data itself can be found in the original spreadsheet, but please don’t contact the aviation stats team for problems with the package!
 
+## Airline Passengers
 
+To access the data on airport passengers, use the function `airport_passengers()`.
+```{r, fig.show='hold'}
+passengers <- ozflights::airport_passengers()
+```
+
+We'll just look at the total for Australia. 
+
+```{r, fig.show='hold'}
+library(ggplot2)
+passengers_aus <- dplyr::filter(passengers, airport == "TOTAL AUSTRALIA")
+passengers_aus$domest <- factor(passengers_aus$domest, levels = c(TRUE, FALSE), labels = c("Domestic", "International"))
+passengers_aus_in <- dplyr::filter(passengers_aus, type == "inbound")
+ggplot(passengers_aus_in)+
+  labs(x="Year", y="Number of Passengers")+ 
+  facet_grid(domest~., scale="free")+
+  geom_line(aes(year, count, colour = type))+
+  theme_light()+
+  ggtitle("Inbound Passengers")
+```
 
 

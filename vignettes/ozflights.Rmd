@@ -9,6 +9,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, fig.show = 'hide'}
+knitr::opts_chunk$set(fig.width=8, fig.height=5) 
+```
+
 Welcome to Ozflights! Get the data for passenger, aircraft and international freight movements for both metropolitan and regional airports in Australia. The dataset covers 1985-2016. 
 
 ## Package Author's Notes
@@ -88,26 +92,12 @@ This work is copyright and the data contained in this publication should not be 
 
 The `ozflights` package gives you access to three data frames. These can be accessed with three simple functions.
 
-### Airport Passengers
-
-To access the data on airport passengers, use the function `airport_passengers()`.
-```{r, fig.show='hold'}
-ozflights::airport_passengers()
-```
-
 ### Aircraft Movements
 
 To access the data on aircraft movements, use the function `aircraft_movements()`:
 
 ```{r, fig.show='hold'}
-ozflights::aircraft_movements()
-```
-
-Let's plot aircraft movements! We need to change the year to a date-time object:
-
-```{r, fig.show='hold'}
 movements <- ozflights::aircraft_movements()
-movements$year <- lubridate::make_date(movements$year)
 ```
 
 Now let's have a look in our data frame. Use `str(movements)` to understand the structure of our tibble.
@@ -133,6 +123,14 @@ Use the option `n = [an integer]` to see more/less in both head or tail:
 head(movements, n = 2)
 tail(movements, n = 3)
 ```
+
+Let's plot aircraft movements. We should change the year to a date-time object because there is inherent ordering in this data:
+
+```{r, fig.show='hold'}
+movements <- ozflights::aircraft_movements()
+movements$year <- lubridate::make_date(movements$year)
+```
+
 
 Now let's try a simple plot!
 
@@ -166,7 +164,8 @@ From the inside out:
 ```{r, fig.show = 'hold'}
 sum(is.na(movements_aus$count))
 ```
-This matches our number of observations. Now missing. Yeah!
+
+None missing. Yeah!
 
 We have both inbound and outbound flights. But we don't want to try and analyse those together- it wouldn't make sense. Let's create two new dataframes: `movements_aus_in` and `movements_aus_out` using `dplyr::filter()` again:
 
@@ -229,7 +228,7 @@ airfreight$type <- base::as.factor(airfreight$type)
 
 How much is freight and how much mail? Let's look at it over time, but first we need to turn the year variable into a time object with lubridate: `lubridate::make_date(airfreight$year)`.
 
-```{r fig.show='hold'}
+```{r fig.show = 'hide'}
 lubridate::make_date(airfreight$year)
 ```
 
@@ -240,3 +239,47 @@ airfreight_in <- dplyr::filter(airfreight, direction == "inbound", airport == "T
 ggplot(airfreight_in)+
   geom_point(aes(year,tonnage, colour = type))
 ```
+
+### Airport Passengers
+
+To access the data on airport passengers, use the function `airport_passengers()`.
+```{r, fig.show='hold'}
+passengers <- ozflights::airport_passengers()
+```
+
+Let's plot and try a facetting. We will plot two charts together: domestic and international airport passengers. We'll do this with the `facet_grid` option. We will also try out a different theme, `theme_light()`. This is a good one because it's quite minimalist.
+
+We'll just look at the total for Australia again.
+
+```{r, fig.show='hold'}
+passengers_aus <- dplyr::filter(passengers, airport == "TOTAL AUSTRALIA")
+ggplot(passengers_aus)+
+  labs(x="Year", y="Number of Passengers")+ 
+  facet_grid(domest~., scale="free")+
+  geom_line(aes(year, count, colour = type))+
+  theme_light()+
+  ggtitle("Passengers, inbound and outbound 1985-2016")
+```
+
+Let's critique this viz. There are a few things we could improve.
+- The 'true' and 'false' on the facet panels just means domestic = TRUE or domestic = FALSE. This isn't incorrect, but it's a terrible way to display it to a client or someone you're working with. Let's recode that variable as a factor. 
+
+We're going to this a little differently as we want the `TRUE` values to be `Domestic` and the `FALSE` values to be `International`. Here, `levels` refers to the existing values in the variable and the `labels` is what we'll code them as.
+
+```{r, fig.show='hold'}
+passengers_aus$domest <- factor(passengers_aus$domest, levels = c(TRUE, FALSE), labels = c("Domestic", "International"))
+```
+
+There is basically no difference between inbound and outbound here, let's just drop outbound!
+
+```{r, fig.show='hold'}
+passengers_aus_in <- dplyr::filter(passengers_aus, type == "inbound")
+ggplot(passengers_aus_in)+
+  labs(x="Year", y="Number of Passengers")+ 
+  facet_grid(domest~., scale="free")+
+  geom_line(aes(year, count, colour = type))+
+  theme_light()+
+  ggtitle("Inbound Passengers")
+```
+
+A much clearer graph! If you want to go pro: can we change the axist labels?
