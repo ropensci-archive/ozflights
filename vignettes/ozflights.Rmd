@@ -1,6 +1,6 @@
 ---
 title: "Ozflights - get the Australian flights data from 1985-2016"
-author: "Maddie Davey, Steph de Silva, Mathew Ling, Nicholas Teirney, Adam Gruen"
+author: "Maddie Davey, Steph de Silva, Mathew Ling, Nicholas Tierney, Adam Gruen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -84,11 +84,104 @@ This work is copyright and the data contained in this publication should not be 
 
 ## Usage
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+The `ozflights` package gives you access to three data frames. These can be accessed with three simple functions.
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+### Airport Passengers
+
+To access the data on airport passengers, use the function `airport_passengers()`.
+```{r, fig.show='hold'}
+ozflights::airport_passengers()
+```
+
+### Aircraft Movements
+
+To access the data on aircraft movements, use the function `aircraft_movements()`:
+
+```{r, fig.show='hold'}
+ozflights::aircraft_movements()
+```
+
+Let's plot aircraft movements! We need to change the year to a date-time object:
+
+```{r, fig.show='hold'}
+movements <- ozflights::aircraft_movements()
+movements$year <- lubridate::make_date(movements$year)
+```
+
+Now let's have a look in our data frame. Use `str(movements)` to understand the structure of our tibble.
+
+```{r, fig.show = 'hold'}
+str(movements)
+```
+
+But we can also use `head` to see what's in the top.
+```{r, fig.show = 'hold'}
+head(movements)
+```
+
+We can also use `tail()` to see the bottom.
+
+```{r, fig.show = 'hold'}
+tail(movements)
+```
+
+Use the option `n = [an integer]` to see more/less in both head or tail:
+
+```{r, fig.show = 'hold'}
+head(movements, n = 2)
+tail(movements, n = 3)
+```
+
+Now let's try a simple plot!
+
+```{r, fig.show = 'hold'}
+plot(movements$count)
+```
+
+There are a few bigguns in there (this is an Australianism, sorry). Let's look at why that is, let's just look at the total movements in Australia for each year with `dplyr::filter`:
+
+```{r, fig.show = 'hold'}
+movements_aus <- dplyr::filter(movements, airport == "TOTAL AUSTRALIA")
+```
+
+How many observations fit this description?
+
+```{r, fig.show = 'hold'}
+str(movements_aus)
+```
+Now let's look at the totals with `head()`:
+
+```{r, fig.show = 'hold'}
+head(movements_aus)
+```
+
+Pro tip! Do you have any missing variables? If you're lucky, these are coded as `NA`. Try looking at the `count` variable in `movements_aus`. We can use the `count()` function combined with `is.na()` to count how many missing values there may be. Pro tip: sometimes variables get names similar to functions. The function is the one with `()` after it. The variable may be attached to a dataframe or tibble, in which case it can be accessed by using `$` operator as in `movements_aus$count`.
+
+From the inside out:
+- We are looking at the count variable in the movements_aus tibble.
+- we are checking which ones are `NA`
+- we are counting them using `count()` from `plyr`
+```{r, fig.show = 'hold'}
+plyr::count(is.na(movements_aus$count))
+```
+This matches our number of observations. Now missing. Yeah!
+
+
+
+```
+library(ggplot2)
+ggplot(movements_aus)+
+  geom_line(aes(year, count))
+```
+### International Airfreight
+
+Note that only international airfreight data is available in this dataset. Unlike aircraft and passenger movements, which are both international and domestic. 
+
+To access this data, use the function `international_freight()':
+
+```{r, fig.show = 'hold'}
+ozflights::international_freight()
+```
 
 ## Figures
 
