@@ -1,6 +1,6 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "Ozflights - get the Australian flights data from 1985-2016"
+author: "Maddie Davey, Steph de Silva, Mathew Ling, Nicholas Tierney, Adam Gruen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -9,50 +9,232 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+Welcome to Ozflights! Get the data for passenger, aircraft and international freight movements for both metropolitan and regional airports in Australia. The dataset covers 1985-2016. Uses the annual airport traffic data from the Australian Government Department of Infrastructure and Regional Development located at: https://bitre.gov.au/publications/ongoing/airport_traffic_data.aspx
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+## Package Author's Notes
 
-## Vignette Info
+Data was available at URL as at 17/10/26. Data is imported into R and cleaned by removing redundant headers and transforming into a tidy format.
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+Airport ranking variable was removed: the interested party can recalculate.
 
-## Styles
+Contact details for the data itself can be found in the original spreadsheet, but please don’t contact the aviation stats team for problems with the package!
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+Beware: there are both Australian totals and individual airport figures in the tables- you may wish to filter either out.
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+## Publication Notes:
 
-## Figures
+This publication presents time series data on scheduled Regular Public Transport (RPT) services at selected Australian airports by calendar year over the period 1986 to 2016.
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
+###Coverage: 
+
+Data is derived from International and Domestic (including Regional) RPT services, and does not include charter or other non-scheduled activity. Data is presented on all Australian airports with more than 7,000 revenue passenger movements during 2016, except for Avalon Airport which is excluded for commercial-in-confidence reasons.
+
+Information on revenue passengers and aircraft movements is provided for all airports that meet the criteria above. Freight and mail data is also provided for those airports receiving international services. Domestic mail and freight data has been excluded as the dataset is incomplete.
+
+### Basis for collection:
+
+The data in this report is presented separately for International and Domestic (including Regional) airline sectors. International airlines are those airlines operating RPT services into or out of Australia. Domestic airlines are those operating RPT services between two Australian airports. From August 2013, statistics on Regional airlines can no longer be separately identified. Calendar year data including Regional airline data separately identified can be found in the file "Airport Traffic Data 1985 to 2012".
+
+International airline statistics are based on Uplift/Discharge. Uplift/Discharge (UD) data shows, by direction, the revenue traffic between the actual points of uplift and discharge within the same flight number, aggregated for all flights within the period.
+
+Domestic (including Regional) airline data have been compiled using a combination of Uplift/Discharge and Traffic On Board (TOB) data. Traffic On Board: One flight stage refers to one take-off and landing. If a passenger's journey involves more than one take-off and landing, then that passenger will be counted for each stage travelled. Traffic On Board statistics, therefore, reflect the number of revenue passengers to/from or via the particular airport.
+
+Domestic passengers carried on domestic legs of international flights are not included in these statistics. However, for July 2011 and onwards domestic passengers carried on international flight numbers that operate only between domestic ports have been included. This change in reporting provides more accurate passenger traffic figures.
+
+### Revenue Passenger Definition:
+
+Up to December 1999, international revenue passengers represented the aggregate of all passengers paying 25 per cent or more of the standard airfare (the ICAO definition of revenue passenger at that time). From January to July 2000, a broader definition of revenue passenger was introduced. Revenue passengers for international services now include all passengers excluding 'free of charge' passengers and positioning crew.
+
+Revenue passengers for domestic and regional airline services are regarded as those paying any fare. Airlines also include passengers travelling on tickets acquired under the terms of frequent flyer schemes.
+
+In this report, airport passenger movement numbers are the sum of passenger arrivals and departures at each airport for Regular Public Transport operations only. Each domestic passenger generates two passenger movements (a departure and an arrival). For example, a passenger flying from Melbourne to Sydney will be counted twice, as a passenger departure at Melbourne and a passenger arrival at Sydney. Each international passenger, however, generates only one passenger movement (either an arrival or a departure).
+
+### Other Points:
+
+Rank for passenger movements is only shown for airports with 50,000 or more passenger movements a year.
+
+Rank for aircraft movements is only shown for airports with 5,000 or more aircraft movements a year.
+
+Rankings for airports that no longer meet the reporting criteria will not be included for prior years.
+
+Domestic airline services were severely affected by the pilots' dispute in 1989-90.
+
+Domestic and Regional services for 2001 and 2002 were affected by the collapse of Ansett in September 2001.
+
+Domestic freighter movements are partial from early 1990s to mid 2000s.
+
+Virgin Australia entered the domestic market in 2000.
+
+Jetstar entered the domestic market in 2004.
+
+Tigerair Australia entered the domestic market in November 2007.
+
+Figures may include estimates and figures for some airports for some years may not be complete.
+
+### Indemnity Statement:
+
+The Bureau of Infrastructure, Transport and Regional Economics has taken due care in preparing this information. However, noting that data have been provided by third parties, the Commonwealth gives no warranty as to the accuracy, reliability, fitness for purpose, or otherwise of the information.
+
+
+Copyright
+
+© Commonwealth of Australia, 2017
+
+This work is copyright and the data contained in this publication should not be reproduced or used in any form without acknowledgement.
+
+## Usage
+
+The `ozflights` package gives you access to three data frames. These can be accessed with three simple functions.
+
+### Airport Passengers
+
+To access the data on airport passengers, use the function `airport_passengers()`.
+```{r, fig.show='hold'}
+ozflights::airport_passengers()
+```
+
+### Aircraft Movements
+
+To access the data on aircraft movements, use the function `aircraft_movements()`:
 
 ```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+ozflights::aircraft_movements()
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+Let's plot aircraft movements! We need to change the year to a date-time object:
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+```{r, fig.show='hold'}
+movements <- ozflights::aircraft_movements()
+movements$year <- lubridate::make_date(movements$year)
 ```
 
-Also a quote using `>`:
+Now let's have a look in our data frame. Use `str(movements)` to understand the structure of our tibble.
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+```{r, fig.show = 'hold'}
+str(movements)
+```
+
+But we can also use `head` to see what's in the top.
+```{r, fig.show = 'hold'}
+head(movements)
+```
+
+We can also use `tail()` to see the bottom.
+
+```{r, fig.show = 'hold'}
+tail(movements)
+```
+
+Use the option `n = [an integer]` to see more/less in both head or tail:
+
+```{r, fig.show = 'hold'}
+head(movements, n = 2)
+tail(movements, n = 3)
+```
+
+Now let's try a simple plot!
+
+```{r, fig.show = 'hold'}
+plot(movements$count)
+```
+
+There are a few bigguns in there (this is an Australianism, sorry). Let's look at why that is, let's just look at the total movements in Australia for each year with `dplyr::filter`:
+
+```{r, fig.show = 'hold'}
+movements_aus <- dplyr::filter(movements, airport == "TOTAL AUSTRALIA")
+```
+
+How many observations fit this description?
+
+```{r, fig.show = 'hold'}
+str(movements_aus)
+```
+Now let's look at the totals with `head()`:
+
+```{r, fig.show = 'hold'}
+head(movements_aus)
+```
+
+Pro tip! Do you have any missing variables? If you're lucky, these are coded as `NA`. Try looking at the `count` variable in `movements_aus`. We can use the `count()` function combined with `is.na()` to count how many missing values there may be. Pro tip: sometimes variables get names similar to functions. The function is the one with `()` after it. The variable may be attached to a dataframe or tibble, in which case it can be accessed by using `$` operator as in `movements_aus$count`.
+
+From the inside out:
+- We are looking at the count variable in the movements_aus tibble.
+- we are checking which ones are `NA`
+- we are counting them using `count()` from `plyr`
+```{r, fig.show = 'hold'}
+plyr::count(is.na(movements_aus$count))
+```
+This matches our number of observations. Now missing. Yeah!
+
+We have both inbound and outbound flights. But we don't want to try and analyse those together- it wouldn't make sense. Let's create two new dataframes: `movements_aus_in` and `movements_aus_out` using `dplyr::filter()` again:
+
+```{r, fig.show = 'hold'}
+movements_aus_in <- dplyr::filter(movements_aus, type == "inbound")
+movements_aus_out <- dplyr::filter(movements_aus, type == "outbound")
+```
+Pro tip: note how we're using `==` in the filter function. This is how we match things in R when making comparisons. (OK, there's more to it than that, but you get the idea!) Other comparison operators include not equals `!=`, less than `<`, less than OR equals to `<=`, greater than `>` and greater than or equals to `>=`.
+
+Let's have a look at inbound totals:
+
+```{r, fig.show = 'hold'}
+plot(movements_aus_in$count)
+```
+
+This plot is a little confusing It doesn't account for the fact that these observations are time-dependent- the order that they arrived in matters, but the dataframe isn't necessarily ordered in that way (though we could change that). It also includes both domestic and international movements.
+
+Let's step up our plotting game here using ggplot to tease out the differences between domestic (`domest == TRUE`) and international (`domest == FALSE`)
+
+```{r, fig.show = 'hold'}
+library(ggplot2)
+ggplot(movements_aus_in)+
+  geom_point(aes(year,count, colour = domest))
+```
+
+### International Airfreight
+
+Note that only international airfreight data is available in this dataset. Unlike aircraft and passenger movements, which are both international and domestic. 
+
+To access this data, use the function `international_freight()':
+
+```{r, fig.show = 'hold'}
+airfreight <- ozflights::international_freight()
+```
+
+OK so we've done all this before, let's start using the basics of 'what is in my dataframe?': 
+- `head()` - what are my variables? Are they the right type? Does it match the start of my datasource, or did I pull it into R starting at the wrong point? I do this by visual inspection with the original file most of the time.
+- `tail()`- did my file stop reading at the right place? Or did it keep going with a bunch of rubbish for some reason. Yes this happens more than you'd hope. Does it have the right number of rows compared to the original file?
+- 'str()` - what's in there? Did its type change compared to what I was expecting? Do I have strings where I wanted factors (probably the other way around). Often, if there is a missing value error code, R will read the entire column of what should be numbers as characters. So you will need to convert!
+
+
+Let's do 'em all here.
+
+```{r, fig.show = 'hold'}
+head(airfreight)
+tail(airfreight)
+str(airfreight)
+```
+
+Let's take a look at the variable `type`:
+```{r, fig.show = 'hold'}
+unique(airfreight$type)
+```
+
+This lends itself to being considered a factor. Let's make it one!
+
+```{r, fig.show = 'hold'}
+airfreight$type <- base::as.factor(airfreight$type)
+```
+
+How much is freight and how much mail? Let's look at it over time, but first we need to turn the year variable into a time object with lubridate: `lubridate::make_date(airfreight$year)`.
+
+```{r fig.show='hold'}
+lubridate::make_date(airfreight$year)
+```
+
+And a plot for mail and total Australia:
+
+```{r, fig.show = 'hold'}
+airfreight_in <- dplyr::filter(airfreight, direction == "inbound", airport == "TOTAL AUSTRALIA")
+ggplot(airfreight_in)+
+  geom_point(aes(year,tonnage, colour = type))
+```
