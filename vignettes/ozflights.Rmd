@@ -172,14 +172,24 @@ We have both inbound and outbound flights. But we don't want to try and analyse 
 movements_aus_in <- dplyr::filter(movements_aus, type == "inbound")
 movements_aus_out <- dplyr::filter(movements_aus, type == "outbound")
 ```
-Pro tip: note how we're using `==` in the filter function. This is how we match things in R when making comparisons. (OK, there's more to it than that, but you get the picture here.)
+Pro tip: note how we're using `==` in the filter function. This is how we match things in R when making comparisons. (OK, there's more to it than that, but you get the idea!) Other comparison operators include not equals `!=`, less than `<`, less than OR equals to `<=`, greater than `>` and greater than or equals to `>=`.
 
+Let's have a look at inbound totals:
 
+```{r, fig.show = 'hold'}
+plot(movements_aus_in$count)
 ```
+
+This plot is a little confusing It doesn't account for the fact that these observations are time-dependent- the order that they arrived in matters, but the dataframe isn't necessarily ordered in that way (though we could change that). It also includes both domestic and international movements.
+
+Let's step up our plotting game here using ggplot to tease out the differences between domestic (`domest == TRUE`) and international (`domest == FALSE`)
+
+```{r, fig.show = 'hold'}
 library(ggplot2)
-ggplot(movements_aus)+
-  geom_line(aes(year, count))
+ggplot(movements_aus_in)+
+  geom_point(aes(year,count, colour = domest))
 ```
+
 ### International Airfreight
 
 Note that only international airfreight data is available in this dataset. Unlike aircraft and passenger movements, which are both international and domestic. 
@@ -187,35 +197,44 @@ Note that only international airfreight data is available in this dataset. Unlik
 To access this data, use the function `international_freight()':
 
 ```{r, fig.show = 'hold'}
-ozflights::international_freight()
+airfreight <- ozflights::international_freight()
 ```
 
-## Figures
+OK so we've done all this before, let's start using the basics of 'what is in my dataframe?': 
+- `head()` - what are my variables? Are they the right type? Does it match the start of my datasource, or did I pull it into R starting at the wrong point? I do this by visual inspection with the original file most of the time.
+- `tail()`- did my file stop reading at the right place? Or did it keep going with a bunch of rubbish for some reason. Yes this happens more than you'd hope. Does it have the right number of rows compared to the original file?
+- 'str()` - what's in there? Did its type change compared to what I was expecting? Do I have strings where I wanted factors (probably the other way around). Often, if there is a missing value error code, R will read the entire column of what should be numbers as characters. So you will need to convert!
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
 
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+Let's do 'em all here.
+
+```{r, fig.show = 'hold'}
+head(airfreight)
+tail(airfreight)
+str(airfreight)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
-
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+Let's take a look at the variable `type`:
+```{r, fig.show = 'hold'}
+unique(airfreight$type)
 ```
 
-Also a quote using `>`:
+This lends itself to being considered a factor. Let's make it one!
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+```{r, fig.show = 'hold'}
+airfreight$type <- base::as.factor(airfreight$type)
+```
+
+How much is freight and how much mail? Let's look at it over time, but first we need to turn the year variable into a time object with lubridate: `lubridate::make_date(airfreight$year)`.
+
+```{r fig.show='hold'}
+lubridate::make_date(airfreight$year)
+```
+
+And a plot for mail and total Australia:
+
+```{r, fig.show = 'hold'}
+airfreight_in <- dplyr::filter(airfreight, direction == "inbound", airport == "TOTAL AUSTRALIA")
+ggplot(airfreight_in)+
+  geom_point(aes(year,tonnage, colour = type))
+```
