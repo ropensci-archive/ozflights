@@ -77,7 +77,7 @@ airport_passengers <- function() {
                                            )
   file.remove("temp-flights.xls")
 
-  airport_passengers <- airport_passengers_raw %>% cleaner()
+  airport_passengers_raw %>% cleaner()
 }
 
 #' Australian aircraft movements
