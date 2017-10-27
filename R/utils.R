@@ -34,3 +34,13 @@ cleaner <- function(x){
       type = gsub("int_", "", type)
     )
 }
+
+# function for converting dms to decimal degrees
+convert_latlong <-  function(deg, min, sec, direction) {
+   ifelse(direction == "W" | direction == "S",
+          (deg + min/60 + sec/360)*-1,
+          (deg + min/60 + sec/360)
+          )
+
+}
+

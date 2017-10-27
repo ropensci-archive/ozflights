@@ -2,5 +2,7 @@
 
 export(aircraft_movements)
 export(airport_passengers)
+export(airports)
+export(flightdistances)
 export(international_freight)
 importFrom(magrittr,"%>%")
