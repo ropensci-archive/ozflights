@@ -28,5 +28,9 @@ Imports: dplyr,
 Suggests: knitr,
     rmarkdown, 
     lubridate,
-    ggplot2
+    ggplot2,
+    sp, 
+    purrr,
+    geosphere,
+    maptools
 VignetteBuilder: knitr

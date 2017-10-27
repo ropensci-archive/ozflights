@@ -1,0 +1,48 @@
+---
+title: "Flight origins and destinations"
+author: "Michael Sumner" 
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    fig_width: 7
+    fig_height: 7
+vignette: >
+  %\VignetteIndexEntry{Flight Origins and Destinations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This is a demonstration of the use of the `airports()` and `flightdistances()` to generate a map of flights in and out of Australian airports. 
+
+```{r}
+library(sp)
+library(dplyr)
+library(ozflights)
+ap <- ozflights::airports()
+fd <- ozflights::flightdistances()
+
+origin <- left_join(fd %>% dplyr::select(origin_code), ap, c("origin_code" = "airport_code"))
+destination <- left_join(fd %>% dplyr::select(dest_code), ap, c("dest_code" = "airport_code"))
+
+## build great circle paths
+bad <- is.na(origin$long) | is.na(destination$long)
+origin <- origin[!bad, ]
+destination <- destination[!bad, ]
+l <- vector("list", nrow(origin))
+oll <- as.matrix(origin %>% dplyr::select(long, lat))
+dll <- as.matrix(destination %>% dplyr::select(long, lat))
+for (i in seq_along(l)) {
+  l[[i]] <- geosphere::gcIntermediate(oll[i, ], dll[i, ])
+}
+
+## get map data and define a projection
+data("wrld_simpl", package = "maptools")
+prj <- "+proj=laea +lon_0=130 +lat_0=-28 +datum=WGS84"
+m <- sp::spTransform(wrld_simpl, prj)
+
+par(mar = rep(0, 4))
+plot(m)
+
+purrr::walk(l, function(x) lines(rgdal::project(x, prj), col = rgb(0, 0, 0, 0.1)))
+
+```

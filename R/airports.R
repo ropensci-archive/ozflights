@@ -17,7 +17,7 @@ airports  <-  function() {
                                    skip = 8)
 
   airports <- airports_raw %>%
-    dplyr::filter(!is.na(CODE)) %>%
+    dplyr::filter(!is.na(`AIRPORT NAME`)) %>%
     dplyr::distinct(`AIRPORT NAME`, .keep_all = TRUE) %>%
     dplyr::select(
       `AIRPORT NAME`,
