@@ -238,6 +238,42 @@ ggplot(airfreight_in)+
 
 To access the data on airport passengers, use the function `airport_passengers()`.
 ```{r, fig.show='hold'}
-ozflights::airport_passengers()
+passengers <- ozflights::airport_passengers()
 ```
 
+Let's plot and try a facetting. We will plot two charts together: domestic and international airport passengers. We'll do this with the `facet_grid` option. We will also try out a different theme, `theme_light()`. This is a good one because it's quite minimalist.
+
+We'll just look at the total for Australia again.
+
+```{r, fig.show='hold'}
+passengers_aus <- dplyr::filter(passengers, airport == "TOTAL AUSTRALIA")
+ggplot(passengers_aus)+
+  labs(x="Year", y="Number of Passengers")+ 
+  facet_grid(domest~., scale="free")+
+  geom_line(aes(year, count, colour = type))+
+  theme_light()+
+  ggtitle("Passengers, inbound and outbound 1985-2016")
+```
+
+Let's critique this viz. There are a few things we could improve.
+- The 'true' and 'false' on the facet panels just means domestic = TRUE or domestic = FALSE. This isn't incorrect, but it's a terrible way to display it to a client or someone you're working with. Let's recode that variable as a factor. 
+
+We're going to this a little differently as we want the `TRUE` values to be `Domestic` and the `FALSE` values to be `International`. Here, `levels` refers to the existing values in the variable and the `labels` is what we'll code them as.
+
+```{r, fig.show='hold'}
+passengers_aus$domest <- factor(passengers_aus$domest, levels = c(TRUE, FALSE), labels = c("Domestic", "International"))
+```
+
+There is basically no difference between inbound and outbound here, let's just drop outbound!
+
+```{r, fig.show='hold'}
+passengers_aus_in <- dplyr::filter(passengers_aus, type == "inbound")
+ggplot(passengers_aus_in)+
+  labs(x="Year", y="Number of Passengers")+ 
+  facet_grid(domest~., scale="free")+
+  geom_line(aes(year, count, colour = type))+
+  theme_light()+
+  ggtitle("Passengers, inbound and outbound 1985-2016")
+```
+
+A much clearer graph! If you want to go pro: can we change the axist labels?
