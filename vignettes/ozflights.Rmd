@@ -88,13 +88,6 @@ This work is copyright and the data contained in this publication should not be 
 
 The `ozflights` package gives you access to three data frames. These can be accessed with three simple functions.
 
-### Airport Passengers
-
-To access the data on airport passengers, use the function `airport_passengers()`.
-```{r, fig.show='hold'}
-ozflights::airport_passengers()
-```
-
 ### Aircraft Movements
 
 To access the data on aircraft movements, use the function `aircraft_movements()`:
@@ -240,3 +233,11 @@ airfreight_in <- dplyr::filter(airfreight, direction == "inbound", airport == "T
 ggplot(airfreight_in)+
   geom_point(aes(year,tonnage, colour = type))
 ```
+
+### Airport Passengers
+
+To access the data on airport passengers, use the function `airport_passengers()`.
+```{r, fig.show='hold'}
+ozflights::airport_passengers()
+```
+
