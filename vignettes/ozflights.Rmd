@@ -97,14 +97,7 @@ The `ozflights` package gives you access to three data frames. These can be acce
 To access the data on aircraft movements, use the function `aircraft_movements()`:
 
 ```{r, fig.show='hold'}
-ozflights::aircraft_movements()
-```
-
-Let's plot aircraft movements! We need to change the year to a date-time object:
-
-```{r, fig.show='hold'}
 movements <- ozflights::aircraft_movements()
-movements$year <- lubridate::make_date(movements$year)
 ```
 
 Now let's have a look in our data frame. Use `str(movements)` to understand the structure of our tibble.
@@ -130,6 +123,14 @@ Use the option `n = [an integer]` to see more/less in both head or tail:
 head(movements, n = 2)
 tail(movements, n = 3)
 ```
+
+Let's plot aircraft movements. We should change the year to a date-time object because there is inherent ordering in this data:
+
+```{r, fig.show='hold'}
+movements <- ozflights::aircraft_movements()
+movements$year <- lubridate::make_date(movements$year)
+```
+
 
 Now let's try a simple plot!
 
@@ -163,7 +164,8 @@ From the inside out:
 ```{r, fig.show = 'hold'}
 sum(is.na(movements_aus$count))
 ```
-This matches our number of observations. Now missing. Yeah!
+
+None missing. Yeah!
 
 We have both inbound and outbound flights. But we don't want to try and analyse those together- it wouldn't make sense. Let's create two new dataframes: `movements_aus_in` and `movements_aus_out` using `dplyr::filter()` again:
 
@@ -226,7 +228,7 @@ airfreight$type <- base::as.factor(airfreight$type)
 
 How much is freight and how much mail? Let's look at it over time, but first we need to turn the year variable into a time object with lubridate: `lubridate::make_date(airfreight$year)`.
 
-```{r fig.show='hold'}
+```{r fig.show = 'hide'}
 lubridate::make_date(airfreight$year)
 ```
 
