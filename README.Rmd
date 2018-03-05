@@ -19,7 +19,7 @@ You can install `ozflights` from github:
 
 ```
 #install.packages("devtools")
-devtools:install_github(ropensci/ozflights)
+devtools::install_github("ropenscilabs/ozflights")
 ```
 
 ## Package Author's Notes
