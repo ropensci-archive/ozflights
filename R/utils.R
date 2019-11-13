@@ -5,10 +5,10 @@ globalVariables(
   c(
     "AIRPORT",
     "Year",
-    "INBOUND",
-    "OUTBOUND",
-    "INBOUND__1",
-    "OUTBOUND__1",
+    "INBOUND...5",
+    "OUTBOUND...6",
+    "INBOUND...8",
+    "OUTBOUND...9",
     "type",
     "count",
     "airport",
@@ -27,15 +27,15 @@ globalVariables(
 )
 
 cleaner <- function(x){
-  dplyr::select(x, AIRPORT, Year, INBOUND, OUTBOUND, INBOUND__1, OUTBOUND__1) %>%
+  dplyr::select(x, AIRPORT, Year, INBOUND...5, OUTBOUND...6, INBOUND...8, OUTBOUND...9) %>%
     dplyr::filter(!is.na(AIRPORT)) %>%
     dplyr::rename(
       airport = AIRPORT,
       year = Year,
-      dom_inbound     = INBOUND,
-      dom_outbound    = OUTBOUND,
-      int_inbound     = INBOUND__1,
-      int_outbound    = OUTBOUND__1
+      dom_inbound     = INBOUND...5,
+      dom_outbound    = OUTBOUND...6,
+      int_inbound     = INBOUND...8,
+      int_outbound    = OUTBOUND...9
     ) %>%
     tidyr::gather(type, count, -airport, -year) %>%
     dplyr::mutate(
