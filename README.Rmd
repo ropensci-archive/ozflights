@@ -2,7 +2,7 @@
 title: "README"
 author: "Mathew Ling, Steph de Silva, Maddie Davey, Nicholas Tierney, Adam Gruer"
 date: "27/10/2017"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -41,7 +41,7 @@ passengers <- ozflights::airport_passengers()
 
 We'll just look at the total for Australia. 
 
-```{r, fig.show='hold'}
+```{r test-figure, fig.show='hold'}
 library(ggplot2)
 passengers_aus <- dplyr::filter(passengers, airport == "TOTAL AUSTRALIA")
 passengers_aus$domest <- factor(passengers_aus$domest, levels = c(TRUE, FALSE), labels = c("Domestic", "International"))
