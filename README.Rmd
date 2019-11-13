@@ -1,6 +1,6 @@
 ---
 title: "README"
-author: "Mathew Ling, Steph de Silva, Maddie Davey, Nicholas Tierney, Adam Gruen"
+author: "Mathew Ling, Steph de Silva, Maddie Davey, Nicholas Tierney, Adam Gruer"
 date: "27/10/2017"
 output: html_document
 ---
