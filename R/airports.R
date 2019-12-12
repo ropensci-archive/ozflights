@@ -13,7 +13,7 @@
 #' }
 airports  <-  function() {
 
-  airports_raw  <- readr::read_csv("https://bitre.gov.au/statistics/aviation/files/australian_air_distances.csv",
+  airports_raw  <- readr::read_csv("https://www.bitre.gov.au/sites/default/files/2019-12/australian_air_distances.csv",
                                    skip = 8)
 
   airports <- airports_raw %>%

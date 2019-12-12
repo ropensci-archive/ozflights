@@ -14,7 +14,7 @@
 #' }
 flightdistances  <-  function() {
 
-  flight_distance_raw  <- readr::read_csv("https://bitre.gov.au/statistics/aviation/files/australian_air_distances.csv",
+  flight_distance_raw  <- readr::read_csv("https://www.bitre.gov.au/sites/default/files/2019-12/australian_air_distances.csv",
                                       skip = 8)
 
   flight_distance <- flight_distance_raw %>%

@@ -14,7 +14,7 @@
 #' }
 international_freight <-  function(){
 
-  utils::download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2018.xlsx",
+  utils::download.file("https://www.bitre.gov.au/sites/default/files/WebAirport_CY_1985-2018.xlsx",
                 mode = "wb",
                 destfile = "temp-flights.xlsx")
 
@@ -66,7 +66,7 @@ international_freight <-  function(){
 #' }
 airport_passengers <- function() {
 
-  utils::download.file("https://www.bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2018.xlsx",
+  utils::download.file("https://www.bitre.gov.au/sites/default/files/WebAirport_CY_1985-2018.xlsx",
               mode = "wb",
               destfile = "temp-flights.xlsx")
 
@@ -96,7 +96,7 @@ airport_passengers <- function() {
 #' }
 aircraft_movements <-  function() {
 
-  utils::download.file("https://bitre.gov.au/publications/ongoing/files/WebAirport_CY_1985-2018.xlsx",
+  utils::download.file("https://www.bitre.gov.au/sites/default/files/WebAirport_CY_1985-2018.xlsx",
               mode = "wb",
               destfile = "temp-flights.xlsx")
 
